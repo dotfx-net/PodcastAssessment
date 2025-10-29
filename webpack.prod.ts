@@ -16,7 +16,8 @@ const config: Configuration = {
   },
   devtool: false,
   resolve: {
-    extensions: ['.tsx', '.ts', '.js']
+    extensions: ['.tsx', '.ts', '.js'],
+    alias: { '@': path.resolve(process.cwd(), 'src') }
   },
   module: {
     rules: [

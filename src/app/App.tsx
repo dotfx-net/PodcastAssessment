@@ -1,6 +1,8 @@
+import AppRouter from './AppRouter';
+
 function App() {
   return (
-    <main>Podcast</main>
+    <AppRouter />
   );
 }
 

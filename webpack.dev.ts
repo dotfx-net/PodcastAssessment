@@ -12,7 +12,8 @@ const config: Configuration = {
   },
   devtool: 'eval-cheap-module-source-map',
   resolve: {
-    extensions: ['.tsx', '.ts', '.js']
+    extensions: ['.tsx', '.ts', '.js'],
+    alias: { '@': path.resolve(process.cwd(), 'src') }
   },
   module: {
     rules: [
