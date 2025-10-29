@@ -4,5 +4,5 @@
   "ITUNES_TOPPODCASTS_PATH": "/us/rss/toppodcasts/limit={{LIMIT}}/genre={{GENRE}}/json",
   "ITUNES_PODCAST_EPISODE_PATH": "/lookup?id={{PODCAST_ID}}&media=podcast&entity=podcastEpisode&limit=20",
   "GENRE": 1310,
-  "LIMIT": 2
+  "LIMIT": 10
 }

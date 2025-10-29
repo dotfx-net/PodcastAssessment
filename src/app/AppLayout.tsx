@@ -1,6 +1,6 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
 
-function Layout() {
+function AppLayout() {
   const location = useLocation();
   const isHome = location.pathname === '/';
 
@@ -20,4 +20,4 @@ function Layout() {
   );
 }
 
-export default Layout;
+export default AppLayout;

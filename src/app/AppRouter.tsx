@@ -1,7 +1,7 @@
 import { getConfig } from '@/app/config/loadConfig';
 import { HeadProvider } from 'react-head';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Layout from '@/app/Layout';
+import AppLayout from '@/app/AppLayout';
 import PodcastListPage from '@/features/podcast/ui/pages/PodcastListPage';
 import PodcastDetailPage from '@/features/podcast/ui/pages/PodcastDetailPage';
 import EpisodePlayerPage from '@/features/podcast/ui/pages/EpisodePlayerPage';
@@ -11,9 +11,7 @@ export async function podcastListLoader() {
   const { LIMIT, GENRE } = getConfig();
 
   try {
-    const items = await di.podcastService.list(LIMIT, GENRE);
-
-    return { items };
+    return { items: di.podcastService.list(LIMIT, GENRE) };
   } catch (e: any) {
     throw new Error(e?.message ?? 'Error');
   }
@@ -22,7 +20,7 @@ export async function podcastListLoader() {
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: <AppLayout />,
     children: [
       { index: true, element: <PodcastListPage />, loader: podcastListLoader },
       { path: 'podcast/:podcastId', element: <PodcastDetailPage /> },
