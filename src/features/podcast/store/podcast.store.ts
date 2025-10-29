@@ -9,6 +9,7 @@ type PodcastState = {
   // data
   list: Podcast[];
   episodesByPodcastId: Record<string, Episode[]>;
+  episodesUpdatedAt: Record<string, number>;
 
   // meta
   loading: boolean;
@@ -31,6 +32,7 @@ export const usePodcastStore = create<PodcastState>()(
     (set, get) => ({
       list: [],
       episodesByPodcastId: {},
+      episodesUpdatedAt: {},
       loading: false,
       lastUpdated: 0,
 
@@ -38,11 +40,11 @@ export const usePodcastStore = create<PodcastState>()(
 
       isOutdated: () => {
         const { lastUpdated } = get();
-        const { CACHE_TTL_MS } = getConfig();
+        const { CACHE_PODCASTS_TTL_MS } = getConfig();
 
         if (!lastUpdated) { return true; }
 
-        return Date.now() - lastUpdated > CACHE_TTL_MS;
+        return Date.now() - lastUpdated > CACHE_PODCASTS_TTL_MS;
       },
 
       getPodcastById: (id) => get().list.find((p) => p.id === id),
@@ -72,9 +74,13 @@ export const usePodcastStore = create<PodcastState>()(
       },
 
       async loadEpisodesIfNeeded(podcastId: string) {
-        const { episodesByPodcastId } = get();
+        const { episodesByPodcastId, episodesUpdatedAt } = get();
+        const { CACHE_EPISODES_TTL_MS } = getConfig();
+        const now = Date.now();
+        const lastUpdate = episodesUpdatedAt[podcastId];
+        const cacheValid = lastUpdate && now - lastUpdate < CACHE_EPISODES_TTL_MS;
 
-        if (!!episodesByPodcastId[podcastId]?.length) { return episodesByPodcastId[podcastId]; }
+        if (!!episodesByPodcastId[podcastId]?.length && cacheValid) { return episodesByPodcastId[podcastId]; }
 
         set({ loading: true });
 
@@ -85,6 +91,10 @@ export const usePodcastStore = create<PodcastState>()(
             episodesByPodcastId: {
               ...state.episodesByPodcastId,
               [podcastId]: episodes
+            },
+            episodesUpdatedAt: {
+              ...state.episodesUpdatedAt,
+              [podcastId]: now
             },
             loading: false
           }));
@@ -101,6 +111,7 @@ export const usePodcastStore = create<PodcastState>()(
       partialize: (state) => ({
         list: state.list,
         episodesByPodcastId: state.episodesByPodcastId,
+        episodesUpdatedAt: state.episodesUpdatedAt,
         lastUpdated: state.lastUpdated
       })
     }
