@@ -1,5 +1,7 @@
 import path from 'node:path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import type { Configuration } from 'webpack';
 
 const config: Configuration = {
@@ -12,24 +14,46 @@ const config: Configuration = {
     assetModuleFilename: 'assets/media/[name].[contenthash:8][ext]',
     clean: true
   },
-  devtool: 'source-map',
+  devtool: false,
   resolve: {
     extensions: ['.tsx', '.ts', '.js']
   },
   module: {
     rules: [
-      { test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/ },
-      { test: /\.css$/, use: ['style-loader', 'css-loader'] },
-      { test: /\.(png|jpg|jpeg|gif|svg)$/i, type: 'asset', parser: { dataUrlCondition: { maxSize: 10 * 1024 } } }
+      {
+        test: /\.tsx?$/,
+        use: {
+          loader: 'ts-loader',
+          options: { transpileOnly: true, compilerOptions: { sourceMap: false } }
+        },
+        exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          { loader: 'css-loader', options: { sourceMap: false } }
+        ]
+      },
+      { test: /\.(png|jpg|jpeg|gif|svg)$/i, type: 'asset', parser: { dataUrlCondition: { maxSize: 10 * 1_024 } } }
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: 'index.html', minify: true })
+    new HtmlWebpackPlugin({ template: 'index.html', minify: false })
   ],
   optimization: {
     splitChunks: { chunks: 'all' },
     runtimeChunk: 'single',
-    minimize: true
+    minimize: true,
+    minimizer: [
+      new TerserPlugin({
+        extractComments: false,
+        terserOptions: { format: { comments: false } }
+      }),
+      new CssMinimizerPlugin({
+        minimizerOptions: { preset: ['default', { discardComments: { removeAll: true } }] }
+      })
+    ]
   },
   performance: { hints: false }
 };
