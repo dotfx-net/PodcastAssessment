@@ -12,11 +12,8 @@ function AppLayout() {
   return (
     <div className="app-container">
       <header className="app-header">
-        {!isHome && (
-          <Link to="/" className="back-link">Back</Link>
-        )}
-        <h1 className="app-title">Podcast App</h1>
-        {(storeLoading || routeLoading) && <div className="loader-bar" />}
+        {isHome ? <h1 className="app-title">Podcast App</h1> : <Link to="/"><h1 className="app-title">Podcast App</h1></Link>}
+        {(storeLoading || routeLoading) && <div className="app-loader" />}
       </header>
 
       <main className="app-main">

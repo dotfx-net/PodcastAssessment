@@ -25,20 +25,20 @@ html, body, #root {
 .app-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1rem;
   border-bottom: 1px solid #ccc;
   padding-bottom: 0.75rem;
   margin-bottom: 1.5rem;
 }
 
-.back-link {
-  text-decoration: none;
-  color: #0070f3;
-  font-weight: 500;
-}
-
-.back-link:hover {
-  text-decoration: underline;
+.app-header > .app-loader {
+  width: 32px;
+  height: 32px;
+  border: 4px solid #e3e3e3;
+  border-top-color: #007bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
 }
 
 .app-main {
@@ -47,12 +47,25 @@ html, body, #root {
 
 .podcast-search {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  justify-content: end;
   margin: 0 0 1rem;
+  gap: 0.5rem;
+}
+
+.podcast-count {
+  min-width: 36px;
+  padding: 0.4rem 0.75rem;
+  border-radius: 10px;
+  background-color: #007bff;
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
 }
 
 .podcast-search input[type="search"] {
-  width: 100vw;
+  width: 25vw;
   padding: 0.75rem 1rem;
   border: 1px solid #d0d0d0;
   border-radius: 10px;
@@ -126,4 +139,10 @@ html, body, #root {
 .podcast-card .meta > .author {
   font-size: 0.8rem;
   color: #666;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
