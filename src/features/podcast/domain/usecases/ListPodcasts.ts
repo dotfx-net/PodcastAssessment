@@ -4,7 +4,7 @@ import { Podcast } from '../entities/Podcast';
 export class ListPodcasts {
   constructor(private readonly repo: PodcastRepository) {}
 
-  async exec(limit = 100): Promise<Podcast[]> {
-    return this.repo.list({ limit });
+  async exec(limit: number, genre: number): Promise<Podcast[]> {
+    return this.repo.list({ limit, genre });
   }
 };

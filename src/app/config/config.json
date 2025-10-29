@@ -1,0 +1,8 @@
+{
+  "ALLORIGINS_URL": "https://api.allorigins.win/get?url=",
+  "ITUNES_URL": "https://itunes.apple.com/",
+  "ITUNES_TOPPODCASTS_PATH": "/us/rss/toppodcasts/limit={{LIMIT}}/genre={{GENRE}}/json",
+  "ITUNES_PODCAST_EPISODE_PATH": "/lookup?id={{PODCAST_ID}}&media=podcast&entity=podcastEpisode&limit=20",
+  "GENRE": 1310,
+  "LIMIT": 2
+}
