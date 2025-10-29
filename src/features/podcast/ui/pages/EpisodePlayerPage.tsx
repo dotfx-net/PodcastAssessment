@@ -1,3 +1,5 @@
+import PodcastSummaryCard from '@/features/podcast/ui/components/PodcastSummaryCard';
+
 function EpisodePlayerPage() {
   return (
     <main>

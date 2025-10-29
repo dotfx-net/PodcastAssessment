@@ -1,11 +1,11 @@
-export type ITunesImage = {
+export type ITunesTopPodcastsEntryImage = {
   label: string;
   attributes?: { height?: string };
 };
 
-export type ITunesEntry = {
+export type ITunesTopPodcastsEntry = {
   ['im:name']: { label: string };
-  ['im:image']: ITunesImage[];
+  ['im:image']: ITunesTopPodcastsEntryImage[];
   summary?: { label: string };
   title: { label: string };
   link: { attributes: { href: string } };
@@ -15,6 +15,22 @@ export type ITunesEntry = {
   ['im:releaseDate']?: { label: string; attributes?: { label?: string } };
 };
 
-export type ITunesFeedResponse = {
+export type ITunesTopPodcastsFeedResponse = {
   feed?: { entry?: ITunesEntry[] };
+};
+
+export type ITunesPodcastEpisode = {
+  wrapperType: 'track' | 'podcastEpisode';
+  collectionId?: number;
+  trackId: string;
+  trackName: string;
+  releaseDate: string;
+  shortDescription: string;
+  trackTimeMillis?: number;
+  episodeUrl?: string;
+};
+
+export type ITunesPodcastFeedResponse = {
+  resultCount?: number;
+  results?: ITunesPodcastEpisode[];
 };

@@ -50,9 +50,8 @@ export const usePodcastStore = create<PodcastState>()(
       async loadListIfOutdated(limit = 100) {
         const state = get();
 
-        if (!!state.list.length && !state.isOutdated()) { console.log('cached'); return state.list; }
+        if (!!state.list.length && !state.isOutdated()) { return state.list; }
 
-console.log('retrieving list');
         set({ loading: true });
 
         try {

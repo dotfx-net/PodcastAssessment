@@ -1,6 +1,7 @@
 import { Podcast } from '../entities/Podcast';
+import { Episode } from '../entities/Episode';
 
 export interface PodcastRepository {
-  list(params: { limit: number }): Promise<Podcast[]>;
-  getById(id: string): Promise<Podcast | null>;
+  list(limit: number): Promise<Podcast[]>;
+  listEpisodes(podcastId: string): Promise<Episode[]>;
 };

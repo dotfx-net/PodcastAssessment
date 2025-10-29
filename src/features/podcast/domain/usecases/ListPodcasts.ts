@@ -5,6 +5,6 @@ export class ListPodcasts {
   constructor(private readonly repo: PodcastRepository) {}
 
   async exec(limit: number): Promise<Podcast[]> {
-    return this.repo.list({ limit });
+    return this.repo.list(limit);
   }
 };

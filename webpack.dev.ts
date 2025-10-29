@@ -64,14 +64,6 @@ const config: Configuration = {
     devMiddleware: {
       writeToDisk: false
     },
-    client: {
-      logging: 'info',
-      overlay: {
-        errors: true,
-        warnings: false
-      },
-      progress: true
-    },
     watchFiles: {
       paths: ['src/**/*', 'public/**/*'],
       options: {

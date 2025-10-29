@@ -5,21 +5,21 @@ import { ListPodcasts } from '@/features/podcast/domain/usecases/ListPodcasts';
 class HardcodedPodcastRepository implements PodcastRepository {
   constructor(private readonly data: Podcast[] = []) {}
 
-  async list({ limit }: { limit: number }): Promise<Podcast[]> {
+  async list(limit: number): Promise<Podcast[]> {
     return this.data.slice(0, limit);
   }
 
-  async getById(id: string): Promise<Podcast | null> {
-    return null;
+  async listEpisodes(podcastId: string): Promise<Episode[]> {
+    return [];
   }
 };
 
 describe('ListPodcasts use case', () => {
   it('should return the available podcasts taking in consideration the specified limit', async () => {
     const podcasts = [
-      new Podcast('1', 'Podcast1', 'Author1', 'img1.jpg', '2025-10-21T14:00:00-07:00'),
-      new Podcast('2', 'Podcast2', 'Author2', 'img2.jpg', '2025-10-21T15:00:00-07:00'),
-      new Podcast('3', 'Podcast3', 'Author3', 'img3.jpg', '2025-10-21T16:00:00-07:00')
+      new Podcast('1', 'Podcast1', 'Author1', 'img1.jpg', '2025-10-21T14:00:00-07:00', 'summary1'),
+      new Podcast('2', 'Podcast2', 'Author2', 'img2.jpg', '2025-10-21T15:00:00-07:00', 'summary2'),
+      new Podcast('3', 'Podcast3', 'Author3', 'img3.jpg', '2025-10-21T16:00:00-07:00', 'summary3'),
     ];
 
     const repo = new HardcodedPodcastRepository(podcasts);

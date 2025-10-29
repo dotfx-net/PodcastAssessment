@@ -1,5 +1,5 @@
-import { useLoaderData, Link } from 'react-router-dom';
 import { Suspense, useState, useMemo, useRef, useDeferredValue, use } from 'react';
+import { useLoaderData, Link } from 'react-router';
 import { Podcast } from '@/features/podcast/domain/entities/Podcast';
 import { usePodcastStore } from '@/features/podcast/store/podcast.store';
 

@@ -17,7 +17,7 @@ html, body, #root {
 }
 
 .app-container {
-  max-width: 768px;
+  max-width: 90vw;
   margin: 0 auto;
   padding: 1rem 1.5rem;
 }
@@ -139,6 +139,107 @@ html, body, #root {
 .podcast-card .meta > .author {
   font-size: 0.8rem;
   color: #666;
+}
+
+.podcast-detail-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.podcast-detail-left {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+}
+
+.podcast-detail-right {
+  flex: 1;
+  min-width: 0;
+}
+
+.podcast-summary-card {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+.podcast-summary-card > .image {
+  width: 100%;
+  text-align: center;
+}
+
+.podcast-summary-card > .image > img {
+  border-radius: 4px;
+}
+
+.episodes-count {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+
+.episodes-count > h3 {
+  margin: 0;
+}
+
+.episodes-table {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.episodes-table-header {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  background-color: #f9f9f9;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.episode-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.15s ease;
+}
+
+.episode-row:hover {
+  background-color: #f5f5f5;
+}
+
+.episodes-row:last-child {
+  border-bottom: none;
+}
+
+.episode-title {
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.episode-date,
+.episode-duration {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.episode-date-col,
+.episode-duration-col {
+  text-align: center;
+  max-width: 120px;
+  width: 120px;
 }
 
 @keyframes spin {

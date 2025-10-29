@@ -1,7 +1,8 @@
 {
   "ITUNES_URL": "https://itunes.apple.com/",
-  "ITUNES_TOPPODCASTS_PATH": "/us/rss/toppodcasts/limit={{LIMIT}}/genre=1310/json",
-  "ITUNES_PODCAST_EPISODE_PATH": "/lookup?id={{PODCAST_ID}}&media=podcast&entity=podcastEpisode&limit=20",
-  "LIMIT": 10,
+  "ITUNES_TOPPODCASTS_PATH": "/us/rss/toppodcasts/limit={{LIMIT_PODCASTS}}/genre=1310/json",
+  "ITUNES_PODCAST_EPISODE_PATH": "/lookup?id={{PODCAST_ID}}&media=podcast&entity=podcastEpisode&limit={{LIMIT_EPISODES}}",
+  "LIMIT_PODCASTS": 100,
+  "LIMIT_EPISODES": 20,
   "CACHE_TTL_MS": 86400000
 }

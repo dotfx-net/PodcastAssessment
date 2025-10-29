@@ -4,7 +4,8 @@ interface Config {
   ITUNES_URL: string;
   ITUNES_TOPPODCASTS_PATH: string;
   ITUNES_PODCAST_EPISODE_PATH: string;
-  LIMIT: number;
+  LIMIT_PODCASTS: number;
+  LIMIT_EPISODES: number;
   CACHE_TTL_MS: number;
 }
 

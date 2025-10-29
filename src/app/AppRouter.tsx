@@ -8,19 +8,18 @@ import EpisodePlayerPage from '@/features/podcast/ui/pages/EpisodePlayerPage';
 import { usePodcastStore } from '@/features/podcast/store/podcast.store';
 
 export async function podcastListLoader() {
-  const { LIMIT } = getConfig();
+  const { LIMIT_PODCASTS } = getConfig();
 
-  const promise = usePodcastStore.getState().loadListIfOutdated(LIMIT).then(() => usePodcastStore.getState().list);
+  const promise = usePodcastStore.getState().loadListIfOutdated(LIMIT_PODCASTS).then(() => usePodcastStore.getState().list);
 
   return { items: promise };
 }
 
 export async function podcastDetailLoader({ params }: { params: { podcastId?: string } }) {
-  const { LIMIT } = getConfig();
-
-  const id = params.podcastId!;
-  const listPromise = usePodcastStore.getState().loadListIfOutdated(LIMIT);
-  const episodesPromise = usePodcastStore.getState().loadEpisodesIfNeeded(id);
+  const { LIMIT_PODCASTS } = getConfig();
+  const podcastId = params.podcastId!;
+  const listPromise = usePodcastStore.getState().loadListIfOutdated(LIMIT_PODCASTS);
+  const episodesPromise = usePodcastStore.getState().loadEpisodesIfNeeded(podcastId);
 
   return {
     list: listPromise.then(() => usePodcastStore.getState().list),
