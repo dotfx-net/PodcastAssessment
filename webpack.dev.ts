@@ -1,43 +1,93 @@
 import path from 'node:path';
+import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import ReactRefreshTypeScript from 'react-refresh-typescript';
 import type { Configuration } from 'webpack';
 
+const root = process.cwd();
 const config: Configuration = {
   mode: 'development',
   entry: './src/main.tsx',
   output: {
-    path: path.resolve(process.cwd(), 'dist'),
-    filename: 'assets/js/bundle.js',
+    path: path.resolve(root, 'dist'),
+    filename: 'assets/js/[name].js',
+    publicPath: '/',
     clean: true
   },
   devtool: 'eval-cheap-module-source-map',
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
-    alias: { '@': path.resolve(process.cwd(), 'src') }
+    extensions: ['.tsx', '.ts', '.js', '.jsx'],
+    alias: { '@': path.resolve(root, 'src') }
   },
   module: {
     rules: [
-      { test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/ },
+      {
+        test: /\.[jt]sx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true,
+            getCustomTransformers: () => ({
+              before: [ReactRefreshTypeScript()]
+            }),
+            compilerOptions: {
+              module: 'ESNext',
+              jsx: 'react-jsx'
+            }
+          }
+        }
+      },
       { test: /\.css$/, use: ['style-loader', 'css-loader'] },
       { test: /\.(png|jpg|jpeg|gif|svg)$/i, type: 'asset', parser: { dataUrlCondition: { maxSize: 10 * 1_024 } } }
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: 'index.html' })
+    new HtmlWebpackPlugin({ template: 'index.html', inject: 'body' }),
+    new webpack.HotModuleReplacementPlugin(),
+    new ReactRefreshWebpackPlugin({
+      overlay: { sockIntegration: 'wds' }
+    })
   ],
   devServer: {
     port: 5173,
-    //open: true,
     hot: true,
-    compress: false, // no gzip in dev env
-    static: [
-      { directory: path.resolve(process.cwd(), 'public'), publicPath: '/' }
-    ],
-    client: { overlay: true },
-    historyApiFallback: true
+    liveReload: false,
+    compress: false,
+    historyApiFallback: true,
+    static: {
+      directory: path.resolve(root, 'public'),
+      publicPath: '/',
+      watch: true
+    },
+    devMiddleware: {
+      writeToDisk: false
+    },
+    client: {
+      logging: 'info',
+      overlay: {
+        errors: true,
+        warnings: false
+      },
+      progress: true
+    },
+    watchFiles: {
+      paths: ['src/**/*', 'public/**/*'],
+      options: {
+        usePolling: true,
+        interval: 500,
+        ignored: /node_modules/
+      }
+    }
   },
   optimization: {
-    minimize: false // no minimize in dev env
+    moduleIds: 'named',
+    runtimeChunk: 'single',
+    minimize: false
+  },
+  cache: {
+    type: 'memory'
   }
 };
 
