@@ -4,6 +4,7 @@
     "lib": ["ES2021", "DOM"],
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "isolatedModules": true,
     "jsx": "react-jsx",
     "strict": true,
     "esModuleInterop": true,

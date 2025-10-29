@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack serve --config webpack.dev.ts",
     "build": "cross-env NODE_ENV=production webpack --config webpack.prod.ts",
-    "preview": "npx http-server dist -c-1"
+    "preview": "npx http-server dist -c-1",
+    "test": "jest"
   },
   "author": "Christian Vandaele <christian@dotfx.net>",
   "dependencies": {
@@ -17,6 +18,7 @@
     "react-router-dom": "^7.9.4"
   },
   "devDependencies": {
+    "@types/jest": "^30.0.0",
     "@types/node": "^24.9.2",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
@@ -24,7 +26,9 @@
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.2",
     "html-webpack-plugin": "^5.6.4",
+    "jest": "^30.2.0",
     "style-loader": "^4.0.0",
+    "ts-jest": "^29.4.5",
     "ts-loader": "^9.5.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",

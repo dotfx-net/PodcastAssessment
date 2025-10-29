@@ -1,0 +1,28 @@
+.app-container {
+  max-width: 768px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+}
+
+.app-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.back-link {
+  text-decoration: none;
+  color: #0070f3;
+  font-weight: 500;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.app-main {
+  min-height: 70vh;
+}
