@@ -5,12 +5,12 @@ import type { ITunesFeedResponse } from '@/features/podcast/api/itunes';
 import { Podcast } from '@/features/podcast/domain/entities/Podcast';
 
 describe('Podcast API integration', () => {
-  const { ITUNES_URL, LIMIT, GENRE } = getConfig();
+  const { ITUNES_URL, LIMIT } = getConfig();
   const http = new FetchHttpClient(ITUNES_URL);
   const api = makePodcastApi(http);
 
   it('should fetch podcasts from the iTunes API', async () => {
-    const data = await api.list(LIMIT, GENRE);
+    const data = await api.list(LIMIT);
 
     expect(Array.isArray(data)).toBe(true);
     expect(data.length).toBeGreaterThan(0);

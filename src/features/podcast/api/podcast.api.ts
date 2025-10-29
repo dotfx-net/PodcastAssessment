@@ -34,9 +34,9 @@ export const mapEntryToDTO = (entry: ITunesEntry): PodcastDTO => {
 
 export function makePodcastApi(http: HttpClient) {
   return {
-    async list(limit: number, genre: number): Promise<PodcastDTO[]> {
+    async list(limit: number): Promise<PodcastDTO[]> {
       const { ITUNES_TOPPODCASTS_PATH } = getConfig();
-      const path = ITUNES_TOPPODCASTS_PATH.replace('{{LIMIT}}', String(limit)).replace('{{GENRE}}', String(genre));
+      const path = ITUNES_TOPPODCASTS_PATH.replace('{{LIMIT}}', String(limit));
 
       const res = await http.get<ITunesFeedResponse>(path);
       const entries = res.feed?.entry ?? [];

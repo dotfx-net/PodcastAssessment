@@ -1,8 +1,13 @@
-import { Link, Outlet, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation, useNavigation } from 'react-router-dom';
+import { usePodcastStore } from '@/features/podcast/store/podcast.store';
 
 function AppLayout() {
+  const navigation = useNavigation();
   const location = useLocation();
   const isHome = location.pathname === '/';
+
+  const storeLoading = usePodcastStore((s) => s.loading);
+  const routeLoading = navigation.state === 'loading' || navigation.state === 'submitting';
 
   return (
     <div className="app-container">
@@ -11,6 +16,7 @@ function AppLayout() {
           <Link to="/" className="back-link">Back</Link>
         )}
         <h1 className="app-title">Podcast App</h1>
+        {(storeLoading || routeLoading) && <div className="loader-bar" />}
       </header>
 
       <main className="app-main">

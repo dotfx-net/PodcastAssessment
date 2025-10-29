@@ -5,7 +5,7 @@ import { ListPodcasts } from '@/features/podcast/domain/usecases/ListPodcasts';
 class HardcodedPodcastRepository implements PodcastRepository {
   constructor(private readonly data: Podcast[] = []) {}
 
-  async list({ limit, genre }: { limit: number, genre: number }): Promise<Podcast[]> {
+  async list({ limit }: { limit: number }): Promise<Podcast[]> {
     return this.data.slice(0, limit);
   }
 
@@ -25,7 +25,7 @@ describe('ListPodcasts use case', () => {
     const repo = new HardcodedPodcastRepository(podcasts);
     const useCase = new ListPodcasts(repo);
 
-    const result = await useCase.exec(2, 1310);
+    const result = await useCase.exec(2);
 
     expect(result).toHaveLength(2);
     expect(result[0].name).toBe('Podcast1');
