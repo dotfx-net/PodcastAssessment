@@ -1,9 +1,7 @@
+import { lazy } from 'react';
 import { getConfig } from '@/app/config/loadConfig';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AppLayout from '@/app/AppLayout';
-import PodcastListPage from '@/features/podcast/ui/pages/PodcastListPage';
-import PodcastDetailPage from '@/features/podcast/ui/pages/PodcastDetailPage';
-import EpisodePlayerPage from '@/features/podcast/ui/pages/EpisodePlayerPage';
 import { usePodcastStore } from '@/features/podcast/application/store/podcast.store';
 
 export async function podcastListLoader() {
@@ -25,6 +23,10 @@ export async function podcastDetailLoader({ params }: { params: { podcastId?: st
     episodes: episodesPromise.then((episodes) => episodes)
   };
 }
+
+const PodcastListPage = lazy(() => import('@/features/podcast/ui/pages/PodcastListPage'));
+const PodcastDetailPage = lazy(() => import('@/features/podcast/ui/pages/PodcastDetailPage'));
+const EpisodePlayerPage = lazy(() => import('@/features/podcast/ui/pages/EpisodePlayerPage'));
 
 const router = createBrowserRouter([
   {
