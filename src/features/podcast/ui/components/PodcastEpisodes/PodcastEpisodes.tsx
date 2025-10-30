@@ -1,7 +1,7 @@
 import { Link } from 'react-router';
 import { Episode } from '@/features/podcast/domain/entities/Episode';
 import { getConfig } from '@/app/config/loadConfig';
-import { formatDuration } from '@/features/podcast/lib/utils';
+import { formatDuration } from '@/shared/utils/formatDuration';
 import styles from './PodcastEpisodes.module.css';
 
 function PodcastEpisodes({ podcastId, episodes }: { podcastId: string, episodes: Episode[] }) {

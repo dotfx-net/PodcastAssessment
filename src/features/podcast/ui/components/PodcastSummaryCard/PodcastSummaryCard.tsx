@@ -1,4 +1,4 @@
-import { usePodcastStore } from '@/features/podcast/store/podcast.store';
+import { usePodcastStore } from '@/features/podcast/application/store/podcast.store';
 import styles from './PodcastSummaryCard.module.css';
 
 function PodcastSummaryCard({ id }: { id: string; }) {

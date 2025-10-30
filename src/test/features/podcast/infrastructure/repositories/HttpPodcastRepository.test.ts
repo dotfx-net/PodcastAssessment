@@ -1,7 +1,6 @@
 import { getConfig } from '@/app/config/loadConfig';
-import { makePodcastApi } from '@/features/podcast/api/podcast.api';
-import { FetchHttpClient } from '@/core/api/FetchHttpClient';
-import type { ITunesFeedResponse } from '@/features/podcast/api/itunes';
+import { makePodcastApi } from '@/features/podcast/infrastructure/api/podcast.api';
+import { FetchHttpClient } from '@/shared/infrastructure/http/FetchHttpClient';
 import { Podcast } from '@/features/podcast/domain/entities/Podcast';
 
 describe('Podcast API integration', () => {

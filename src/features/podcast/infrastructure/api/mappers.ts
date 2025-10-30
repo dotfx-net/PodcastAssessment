@@ -1,5 +1,5 @@
-import { Podcast } from '../domain/entities/Podcast';
-import { Episode } from '../domain/entities/Episode';
+import { Podcast } from '@/features/podcast/domain/entities/Podcast';
+import { Episode } from '@/features/podcast/domain/entities/Episode';
 import type { PodcastDTO, EpisodeDTO } from './podcast.api';
 
 export const toPodcastEntity = (dto: PodcastDTO): Podcast => new Podcast(dto.id, dto.name, dto.author, dto.imageUrl, dto.date, dto.summary);

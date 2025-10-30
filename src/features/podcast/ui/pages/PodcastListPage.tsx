@@ -1,7 +1,7 @@
 import { Suspense, useState, useMemo, use } from 'react';
 import { useLoaderData } from 'react-router';
 import { Podcast } from '@/features/podcast/domain/entities/Podcast';
-import { usePodcastStore } from '@/features/podcast/store/podcast.store';
+import { usePodcastStore } from '@/features/podcast/application/store/podcast.store';
 import { PodcastCard } from '@/features/podcast/ui/components/PodcastCard';
 import { PodcastSearch } from '@/features/podcast/ui/components/PodcastSearch';
 

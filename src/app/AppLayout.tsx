@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation, useNavigation } from 'react-router-dom';
-import { usePodcastStore } from '@/features/podcast/store/podcast.store';
+import { usePodcastStore } from '@/features/podcast/application/store/podcast.store';
 
 function AppLayout() {
   const navigation = useNavigation();

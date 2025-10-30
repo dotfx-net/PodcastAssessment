@@ -5,7 +5,7 @@ import AppLayout from '@/app/AppLayout';
 import PodcastListPage from '@/features/podcast/ui/pages/PodcastListPage';
 import PodcastDetailPage from '@/features/podcast/ui/pages/PodcastDetailPage';
 import EpisodePlayerPage from '@/features/podcast/ui/pages/EpisodePlayerPage';
-import { usePodcastStore } from '@/features/podcast/store/podcast.store';
+import { usePodcastStore } from '@/features/podcast/application/store/podcast.store';
 
 export async function podcastListLoader() {
   const { LIMIT_PODCASTS } = getConfig();
