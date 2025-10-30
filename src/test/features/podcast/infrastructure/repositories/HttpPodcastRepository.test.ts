@@ -1,5 +1,5 @@
 import { getConfig } from '@/app/config/loadConfig';
-import { makePodcastApi } from '@/features/podcast/infrastructure/api/podcast.api';
+import { makePodcastApi } from '@/features/podcast/infrastructure/adapters/http/podcast.api';
 import { FetchHttpClient } from '@/shared/infrastructure/http/FetchHttpClient';
 import { Podcast } from '@/features/podcast/domain/entities/Podcast';
 

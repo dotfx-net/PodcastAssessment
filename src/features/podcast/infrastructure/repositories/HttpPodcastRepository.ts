@@ -1,7 +1,7 @@
-import type { PodcastRepository } from '../domain/ports/PodcastRepository';
-import { makePodcastApi } from '../api/podcast.api';
-import { toPodcastEntity, toEpisodeEntity } from '../api/mappers';
-import type { HttpClient } from '@/core/api/HttpClient';
+import type { PodcastRepository } from '@/features/podcast/domain/ports/PodcastRepository';
+import { makePodcastApi } from '@/features/podcast/infrastructure/adapters/http/podcast.api';
+import { toPodcastEntity, toEpisodeEntity } from '@/features/podcast/infrastructure/adapters/http/itunes.mappers';
+import type { HttpClient } from '@/shared/infrastructure/HttpClient';
 
 export class HttpPodcastRepository implements PodcastRepository {
   private api = makePodcastApi(this.http);

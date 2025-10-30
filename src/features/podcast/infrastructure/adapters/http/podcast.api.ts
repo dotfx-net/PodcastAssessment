@@ -1,6 +1,6 @@
 import { getConfig } from '@/app/config/loadConfig';
 import type { HttpClient } from '@/core/api/HttpClient';
-import type { ITunesTopPodcastsFeedResponse, ITunesTopPodcastsEntry, ITunesPodcastFeedResponse, ITunesPodcastEpisode } from './itunes';
+import type { ITunesTopPodcastsFeedResponse, ITunesTopPodcastsEntry, ITunesPodcastFeedResponse, ITunesPodcastEpisode } from './itunes.dto';
 
 export type PodcastDTO = {
   id: string;
