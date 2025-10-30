@@ -34,7 +34,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <PodcastListPage />, loader: podcastListLoader },
       { path: 'podcast/:podcastId', element: <PodcastDetailPage />, loader: podcastDetailLoader },
-      { path: 'podcast/:podcastId/episode/:episodeId', element: <EpisodePlayerPage /> }
+      { path: 'podcast/:podcastId/episode/:episodeId', element: <EpisodePlayerPage />, loader: podcastDetailLoader }
     ]
   }
 ]);

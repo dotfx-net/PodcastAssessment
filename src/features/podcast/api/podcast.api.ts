@@ -45,11 +45,11 @@ export const mapPodcastEntryToPodcastDTO = (entry: ITunesTopPodcastsEntry): Podc
 };
 
 export const mapEpisodeEntryToEpisodeDTO = (entry: ITunesPodcastEpisode): EpisodeDTO => {
-  const id = entry?.trackId ?? '';
+  const id = String(entry?.trackId ?? '');
   const title = entry?.trackName ?? '';
   const duration = entry?.trackTimeMillis ?? 0;
   const date = entry?.releaseDate ?? '';
-  const description = entry?.shortDescription ?? '';
+  const description = entry?.description ?? '';
   const audioUrl = entry?.episodeUrl ?? '';
 
   return {

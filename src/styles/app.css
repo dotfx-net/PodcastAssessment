@@ -16,6 +16,10 @@ html, body, #root {
   font-family: "Noto Sans" !important;
 }
 
+hr {
+  margin: 1.5rem 0;
+}
+
 .app-container {
   max-width: 90vw;
   margin: 0 auto;
@@ -32,7 +36,11 @@ html, body, #root {
   margin-bottom: 1.5rem;
 }
 
-.app-header > .app-loader {
+.app-header > a {
+  text-decoration: none;
+}
+
+.app-header .app-loader {
   width: 32px;
   height: 32px;
   border: 4px solid #e3e3e3;
@@ -97,13 +105,10 @@ html, body, #root {
   padding: 3.5rem 1rem 1rem;
   margin-top: 3rem;
   text-align: center;
+  text-decoration: none;
   color: inherit;
   opacity: 0.75;
   transition: opacity 0.25s ease, box-shadow 0.25s ease;
-}
-
-.podcast-card * {
-  text-decoration: none;
 }
 
 .podcast-card:hover {
@@ -157,22 +162,6 @@ html, body, #root {
 .podcast-detail-right {
   flex: 1;
   min-width: 0;
-}
-
-.podcast-summary-card {
-  background-color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-}
-
-.podcast-summary-card > .image {
-  width: 100%;
-  text-align: center;
-}
-
-.podcast-summary-card > .image > img {
-  border-radius: 4px;
 }
 
 .episodes-count {
@@ -240,6 +229,17 @@ html, body, #root {
   text-align: center;
   max-width: 120px;
   width: 120px;
+}
+
+.episode-player {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+.episode-player audio {
+  width: 100%;
 }
 
 @keyframes spin {

@@ -14,6 +14,18 @@ const matches = (p: Podcast, q: string) => {
   return n.includes(q) || a.includes(q);
 };
 
+function PodcastCard({ podcast }: { podcast: Podcast }) {
+  return (
+    <Link key={podcast.id} to={`/podcast/${podcast.id}`} className="podcast-card">
+      <img src={podcast.imageUrl} alt={podcast.name} width={120} height={120} />
+      <div className="meta">
+        <div className="name">{podcast.name}</div>
+        <div className="author">Author: {podcast.author}</div>
+      </div>
+    </Link>
+  );
+}
+
 function PodcastList({ itemsPromise }: { itemsPromise: Promise<Podcast[]>;}) {
   const items = use(itemsPromise);
   const [query, setQuery] = useState('');
@@ -42,15 +54,7 @@ function PodcastList({ itemsPromise }: { itemsPromise: Promise<Podcast[]>;}) {
 
       <div className="podcast-grid">
         {filtered.map((p) => (
-          <div key={p.id} className="podcast-card">
-            <Link to={`/podcast/${p.id}`}>
-              <img src={p.imageUrl} alt={p.name ?? 'Podcast'} width={120} height={120} />
-              <div className="meta">
-                <div className="name">{p.name}</div>
-                <div className="author">{p.author}</div>
-              </div>
-            </Link>
-          </div>
+          <PodcastCard key={p.id} podcast={p} />
         ))}
       </div>
     </>

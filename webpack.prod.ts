@@ -30,10 +30,26 @@ const config: Configuration = {
         exclude: /node_modules/
       },
       {
+        test: /\.module\.css$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[hash:base64:6]',
+                exportLocalsConvention: 'asIs',
+                namedExport: false
+              }
+            }
+          }
+        ]
+      },
+      {
         test: /\.css$/,
         use: [
           'style-loader',
-          { loader: 'css-loader', options: { sourceMap: false } }
+          { loader: 'css-loader', options: { sourceMap: false }, exclude: /\.module\.css }
         ]
       },
       { test: /\.(png|jpg|jpeg|gif|svg)$/i, type: 'asset', parser: { dataUrlCondition: { maxSize: 10 * 1_024 } } }

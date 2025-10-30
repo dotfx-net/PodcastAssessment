@@ -2,7 +2,8 @@ import { Suspense, use, useMemo } from 'react';
 import { useLoaderData, Link, useParams } from 'react-router';
 import { Podcast } from '@/features/podcast/domain/entities/Podcast';
 import { Episode } from '@/features/podcast/domain/entities/Episode';
-import PodcastSummaryCard from '@/features/podcast/ui/components/PodcastSummaryCard';
+import { PodcastSummaryCard } from '@/features/podcast/ui/components/PodcastSummaryCard';
+import { getConfig } from '@/app/config/loadConfig';
 
 type LoaderData = {
   list: Promise<Podcast[]>;
@@ -21,13 +22,15 @@ function formatDuration(sec: number) {
   return `${h > 0 ? hh + ':' : ''}${mm}:${ss}`;
 }
 
-function PodcastEpisodes({ data, podcastId }: { data: LoaderData; podcastId: string }) {
+function PodcastEpisodes({ data, podcastId }: { data: LoaderData; podcastId: string; }) {
   const list = use(data.list);
   const episodes = use(data.episodes);
   const podcast = useMemo(() => list.find((p) => p.id === podcastId), [list, podcastId]);
 
   if (!podcast) { throw new Error('Podcast Id not found'); }
   if (!episodes.length) { throw new Error('Podcast is empty'); }
+
+  const { INTL_FORMAT } = getConfig();
 
   return (
     <div className="podcast-detail-layout">
@@ -48,7 +51,7 @@ function PodcastEpisodes({ data, podcastId }: { data: LoaderData; podcastId: str
           </div>
 
           {episodes.map((episode) => {
-            const date = new Intl.DateTimeFormat('en-US').format(new Date(episode.date));
+            const date = new Intl.DateTimeFormat(INTL_FORMAT).format(new Date(episode.date));
 
             return (
               <Link key={episode.id} to={`/podcast/${podcastId}/episode/${episode.id}`} className="episode-row" role="row">

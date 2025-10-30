@@ -16,7 +16,7 @@ describe('Podcast API integration', () => {
     expect(data.length).toBeGreaterThan(0);
 
     const first = data[0];
-console.log({first});
+
     expect(first).toHaveProperty('id');
     expect(first).toHaveProperty('name');
     expect(first).toHaveProperty('author');

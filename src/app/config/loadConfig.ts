@@ -8,6 +8,7 @@ interface Config {
   LIMIT_EPISODES: number;
   CACHE_PODCASTS_TTL_MS: number;
   CACHE_EPISODES_TTL_MS: number;
-}
+  INTL_FORMAT: string;
+};
 
 export const getConfig = () => cfg as Config;

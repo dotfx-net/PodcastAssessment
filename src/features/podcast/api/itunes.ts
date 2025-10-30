@@ -25,7 +25,7 @@ export type ITunesPodcastEpisode = {
   trackId: string;
   trackName: string;
   releaseDate: string;
-  shortDescription: string;
+  description: string;
   trackTimeMillis?: number;
   episodeUrl?: string;
 };

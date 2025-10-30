@@ -1,12 +1,13 @@
 import { usePodcastStore } from '@/features/podcast/store/podcast.store';
+import styles from './PodcastSummaryCard.module.css';
 
 function PodcastSummaryCard({ id }: { id: string; }) {
   const getPodcastById = usePodcastStore((s) => s.getPodcastById);
   const podcast = getPodcastById(id);
 
   return (
-    <div className="podcast-summary-card">
-      <div className="image">
+    <div className={styles.podcast_summary_card}>
+      <div className={styles.image}>
         <img src={podcast.imageUrl} alt={podcast.name} width={120} height={120} />
       </div>
       <hr />
@@ -15,7 +16,10 @@ function PodcastSummaryCard({ id }: { id: string; }) {
         <i className="author">by {podcast.author}</i>
       </div>
       <hr />
-      <small className="summary">{podcast.summary}</small>
+      <div className="description">
+        <h5>Description:</h5>
+        <i className="summary">{podcast.summary}</i>
+      </div>
     </div>
   );
 }
