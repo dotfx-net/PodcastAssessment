@@ -2,6 +2,7 @@ import { Suspense, useState, useMemo, useRef, useDeferredValue, use } from 'reac
 import { useLoaderData, Link } from 'react-router';
 import { Podcast } from '@/features/podcast/domain/entities/Podcast';
 import { usePodcastStore } from '@/features/podcast/store/podcast.store';
+import { PodcastSearch } from '@/features/podcast/ui/components/PodcastSearch';
 
 type LoaderData = { items: Promise<Podcast[]> };
 
@@ -28,11 +29,9 @@ function PodcastCard({ podcast }: { podcast: Podcast }) {
 
 function PodcastList({ itemsPromise }: { itemsPromise: Promise<Podcast[]>;}) {
   const items = use(itemsPromise);
-  const [query, setQuery] = useState('');
-  const deferredQuery = useDeferredValue(query);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const q = toLower(query.trim());
   const loading = usePodcastStore((s) => s.loading);
+  const [query, setQuery] = useState('');
+  const q = toLower(query.trim());
   const filtered = useMemo(
     () => (q !== '' ? items.filter((p) => matches(p, q)) : items),
     [items, q]
@@ -42,14 +41,7 @@ function PodcastList({ itemsPromise }: { itemsPromise: Promise<Podcast[]>;}) {
     <>
       <div className="podcast-search">
         <div className="podcast-count">{filtered.length}</div>
-        <input
-          ref={inputRef}
-          type="search"
-          placeholder="Search by name or author..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          disabled={loading}
-        />
+        <PodcastSearch loading={loading} setQuery={setQuery} />
       </div>
 
       <div className="podcast-grid">
