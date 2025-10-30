@@ -1,7 +1,8 @@
-import { Suspense, useState, useMemo, useRef, useDeferredValue, use } from 'react';
-import { useLoaderData, Link } from 'react-router';
+import { Suspense, useState, useMemo, use } from 'react';
+import { useLoaderData } from 'react-router';
 import { Podcast } from '@/features/podcast/domain/entities/Podcast';
 import { usePodcastStore } from '@/features/podcast/store/podcast.store';
+import { PodcastCard } from '@/features/podcast/ui/components/PodcastCard';
 import { PodcastSearch } from '@/features/podcast/ui/components/PodcastSearch';
 
 type LoaderData = { items: Promise<Podcast[]> };
@@ -14,18 +15,6 @@ const matches = (p: Podcast, q: string) => {
 
   return n.includes(q) || a.includes(q);
 };
-
-function PodcastCard({ podcast }: { podcast: Podcast }) {
-  return (
-    <Link key={podcast.id} to={`/podcast/${podcast.id}`} className="podcast-card">
-      <img src={podcast.imageUrl} alt={podcast.name} width={120} height={120} />
-      <div className="meta">
-        <div className="name">{podcast.name}</div>
-        <div className="author">Author: {podcast.author}</div>
-      </div>
-    </Link>
-  );
-}
 
 function PodcastList({ itemsPromise }: { itemsPromise: Promise<Podcast[]>;}) {
   const items = use(itemsPromise);
