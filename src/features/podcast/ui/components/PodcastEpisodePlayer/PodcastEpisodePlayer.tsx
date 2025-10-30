@@ -32,7 +32,7 @@ function PodcastEpisodePlayer({ episode }: { episode: Episode }) {
       <h2>{episode.title}</h2>
       <div className={styles.episode_description} dangerouslySetInnerHTML={{ __html: sanitized }} />
       <hr />
-      <audio controls src={episode.audioUrl} />
+      <audio controls src={episode.audioUrl} data-testid="audio" />
     </section>
   );
 }

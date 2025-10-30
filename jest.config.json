@@ -1,8 +1,35 @@
 {
   "preset": "ts-jest",
-  "roots": ["<rootDir>/src/test"],
-  "testEnvironment": "node",
-  "testMatch": ["**/*.test.ts", "**/*.test.tsx"],
   "moduleNameMapper": { "^@/(.*)$": "<rootDir>/src/$1" },
-  "verbose": true
+  "verbose": true,
+  "projects": [
+    {
+      "displayName": "ui",
+      "preset": "ts-jest",
+      "roots": ["<rootDir>/src/test/features/podcast/ui"],
+      "testEnvironment": "jsdom",
+      "testMatch": ["**/*.test.tsx"],
+      "setupFilesAfterEnv": ["<rootDir>/src/test/features/podcast/ui/setupTests.ts"],
+      "moduleNameMapper": {
+        "^@/(.*)$": "<rootDir>/src/$1",
+        "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+      }
+    },
+    {
+      "displayName": "domain",
+      "preset": "ts-jest",
+      "roots": ["<rootDir>/src/test/features/podcast/domain"],
+      "testEnvironment": "node",
+      "testMatch": ["**/*.test.ts"],
+      "moduleNameMapper": { "^@/(.*)$": "<rootDir>/src/$1" }
+    },
+    {
+      "displayName": "infrastructure",
+      "preset": "ts-jest",
+      "roots": ["<rootDir>/src/test/features/podcast/infrastructure"],
+      "testEnvironment": "node",
+      "testMatch": ["**/*.test.ts"],
+      "moduleNameMapper": { "^@/(.*)$": "<rootDir>/src/$1" }
+    }
+  ]
 }
