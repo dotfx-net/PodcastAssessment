@@ -28,20 +28,24 @@ function PodcastListPage() {
   );
 
   return (
-    <section>
-      <Suspense fallback={<h2>Loading podcasts...</h2>}>
-        <div className="podcast-search">
-          <div className="podcast-count">{filtered.length}</div>
-          <PodcastSearch loading={loading} setQuery={setQuery} />
-        </div>
+    <>
+      <title>Podcasts</title>
 
-        <div className="podcast-grid">
-          {filtered.map((p) => (
-            <PodcastCard key={p.id} podcast={p} />
-          ))}
-        </div>
-      </Suspense>
-    </section>
+      <section>
+        <Suspense fallback={<h2>Loading podcasts...</h2>}>
+          <div className="podcast-search">
+            <div className="podcast-count">{filtered.length}</div>
+            <PodcastSearch loading={loading} setQuery={setQuery} />
+          </div>
+
+          <div className="podcast-grid">
+            {filtered.map((p) => (
+              <PodcastCard key={p.id} podcast={p} />
+            ))}
+          </div>
+        </Suspense>
+      </section>
+    </>
   );
 }
 

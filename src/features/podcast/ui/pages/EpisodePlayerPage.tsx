@@ -23,19 +23,23 @@ function EpisodePlayerPage() {
   if (!episode) { throw new Error('Episode not found'); }
 
   return (
-    <section>
-      <Suspense fallback={<h2>Loading podcast episode...</h2>}>
-        <div className="podcast-detail-layout">
-          <div className="podcast-detail-left">
-            <PodcastSummaryCard id={podcastId} />
-          </div>
+    <>
+      <title>{`Episode ${episode.id} | Podcast ${podcastId}`}</title>
 
-          <div className="podcast-detail-right">
-            <PodcastEpisodePlayer episode={episode} />
+      <section>
+        <Suspense fallback={<h2>Loading podcast episode...</h2>}>
+          <div className="podcast-detail-layout">
+            <div className="podcast-detail-left">
+              <PodcastSummaryCard id={podcastId} />
+            </div>
+
+            <div className="podcast-detail-right">
+              <PodcastEpisodePlayer episode={episode} />
+            </div>
           </div>
-        </div>
-      </Suspense>
-    </section>
+        </Suspense>
+      </section>
+    </>
   );
 }
 

@@ -1,5 +1,4 @@
 import { getConfig } from '@/app/config/loadConfig';
-import { HeadProvider } from 'react-head';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AppLayout from '@/app/AppLayout';
 import PodcastListPage from '@/features/podcast/ui/pages/PodcastListPage';
@@ -41,9 +40,7 @@ const router = createBrowserRouter([
 
 function AppRouter() {
   return (
-    <HeadProvider>
-      <RouterProvider router={router} />
-    </HeadProvider>
+    <RouterProvider router={router} />
   );
 }
 

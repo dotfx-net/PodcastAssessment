@@ -21,23 +21,27 @@ function PodcastDetailPage() {
   if (!episodes.length) { throw new Error('Podcast is empty'); }
 
   return (
-    <section>
-      <Suspense fallback={<h2>Loading podcast...</h2>}>
-        <div className="podcast-detail-layout">
-          <div className="podcast-detail-left">
-            <PodcastSummaryCard id={podcastId} />
-          </div>
+    <>
+      <title>{`Episodes | Podcast ${podcastId}`}</title>
 
-          <div className="podcast-detail-right">
-            <div className="episodes-count">
-              <h3>Episodes: {episodes.length}</h3>
+      <section>
+        <Suspense fallback={<h2>Loading podcast...</h2>}>
+          <div className="podcast-detail-layout">
+            <div className="podcast-detail-left">
+              <PodcastSummaryCard id={podcastId} />
             </div>
 
-            <PodcastEpisodes podcastId={podcastId} episodes={episodes} />
+            <div className="podcast-detail-right">
+              <div className="episodes-count">
+                <h3>Episodes: {episodes.length}</h3>
+              </div>
+
+              <PodcastEpisodes podcastId={podcastId} episodes={episodes} />
+            </div>
           </div>
-        </div>
-      </Suspense>
-    </section>
+        </Suspense>
+      </section>
+    </>
   );
 }
 
