@@ -52,9 +52,13 @@ export const usePodcastStore = create<PodcastState>()(
       async loadListIfOutdated(limit = 100) {
         const state = get();
 
-        if (!!state.list.length && !state.isOutdated()) { return state.list; }
-
         set({ loading: true });
+
+        if (!!state.list.length && !state.isOutdated()) {
+          set({ loading: false });
+
+          return state.list;
+        }
 
         try {
           const items = await di.podcastService.list(limit);
@@ -80,9 +84,13 @@ export const usePodcastStore = create<PodcastState>()(
         const lastUpdate = episodesUpdatedAt[podcastId];
         const cacheValid = lastUpdate && now - lastUpdate < CACHE_EPISODES_TTL_MS;
 
-        if (!!episodesByPodcastId[podcastId]?.length && cacheValid) { return episodesByPodcastId[podcastId]; }
-
         set({ loading: true });
+
+        if (!!episodesByPodcastId[podcastId]?.length && cacheValid) {
+          set({ loading: false });
+
+          return episodesByPodcastId[podcastId];
+        }
 
         try {
           const episodes = await di.podcastService.listEpisodes(podcastId);

@@ -16,8 +16,9 @@ const matches = (p: Podcast, q: string) => {
   return n.includes(q) || a.includes(q);
 };
 
-function PodcastList({ itemsPromise }: { itemsPromise: Promise<Podcast[]>;}) {
-  const items = use(itemsPromise);
+function PodcastListPage() {
+  const data = useLoaderData() as LoaderData;
+  const items = use(data.items);
   const loading = usePodcastStore((s) => s.loading);
   const [query, setQuery] = useState('');
   const q = toLower(query.trim());
@@ -27,28 +28,18 @@ function PodcastList({ itemsPromise }: { itemsPromise: Promise<Podcast[]>;}) {
   );
 
   return (
-    <>
-      <div className="podcast-search">
-        <div className="podcast-count">{filtered.length}</div>
-        <PodcastSearch loading={loading} setQuery={setQuery} />
-      </div>
-
-      <div className="podcast-grid">
-        {filtered.map((p) => (
-          <PodcastCard key={p.id} podcast={p} />
-        ))}
-      </div>
-    </>
-  );
-}
-
-function PodcastListPage() {
-  const data = useLoaderData() as LoaderData;
-
-  return (
     <section>
       <Suspense fallback={<h2>Loading podcasts...</h2>}>
-        <PodcastList itemsPromise={data.items} />
+        <div className="podcast-search">
+          <div className="podcast-count">{filtered.length}</div>
+          <PodcastSearch loading={loading} setQuery={setQuery} />
+        </div>
+
+        <div className="podcast-grid">
+          {filtered.map((p) => (
+            <PodcastCard key={p.id} podcast={p} />
+          ))}
+        </div>
       </Suspense>
     </section>
   );
