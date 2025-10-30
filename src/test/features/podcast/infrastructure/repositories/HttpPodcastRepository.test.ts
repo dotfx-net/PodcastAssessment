@@ -4,12 +4,12 @@ import { FetchHttpClient } from '@/shared/infrastructure/http/FetchHttpClient';
 import { Podcast } from '@/features/podcast/domain/entities/Podcast';
 
 describe('Podcast API integration', () => {
-  const { ITUNES_URL, LIMIT_PODCASTS } = getConfig();
-  const http = new FetchHttpClient(ITUNES_URL);
+  const config = getConfig();
+  const http = new FetchHttpClient(config.ITUNES_URL);
   const api = makePodcastApi(http);
 
   it('should fetch podcasts from the iTunes API', async () => {
-    const data = await api.list(LIMIT_PODCASTS);
+    const data = await api.list(config.LIMIT_PODCASTS);
 
     expect(Array.isArray(data)).toBe(true);
     expect(data.length).toBeGreaterThan(0);

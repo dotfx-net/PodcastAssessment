@@ -2,25 +2,26 @@ import { lazy } from 'react';
 import { getConfig } from '@/app/config/loadConfig';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import AppLayout from '@/app/AppLayout';
-import { usePodcastStore } from '@/features/podcast/application/store/podcast.store';
+import { di } from '@/app/config/di';
+import type { Podcast } from '@/features/podcast/domain/entities/Podcast';
+import type { Episode } from '@/features/podcast/domain/entities/Episode';
 
 export async function podcastListLoader() {
-  const { LIMIT_PODCASTS } = getConfig();
+  const config = getConfig();
+  const itemsPromise = di.podcastService.list(config.LIMIT_PODCASTS).catch((error) => [] as Podcast[]);
 
-  const promise = usePodcastStore.getState().loadListIfOutdated(LIMIT_PODCASTS).then(() => usePodcastStore.getState().list);
-
-  return { items: promise };
+  return { items: itemsPromise };
 }
 
 export async function podcastDetailLoader({ params }: { params: { podcastId?: string } }) {
-  const { LIMIT_PODCASTS } = getConfig();
+  const config = getConfig();
   const podcastId = params.podcastId!;
-  const listPromise = usePodcastStore.getState().loadListIfOutdated(LIMIT_PODCASTS);
-  const episodesPromise = usePodcastStore.getState().loadEpisodesIfNeeded(podcastId);
+  const listPromise = di.podcastService.list(config.LIMIT_PODCASTS).catch((error) => [] as Podcast[]);
+  const episodesPromise = di.podcastService.listEpisodes(podcastId).catch((error) => [] as Episode[]);
 
   return {
-    list: listPromise.then(() => usePodcastStore.getState().list),
-    episodes: episodesPromise.then((episodes) => episodes)
+    list: listPromise,
+    episodes: episodesPromise
   };
 }
 

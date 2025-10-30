@@ -1,28 +1,40 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { getConfig } from '@/app/config/loadConfig';
-import { di } from '@/app/config/di';
 import { Podcast } from '@/features/podcast/domain/entities/Podcast';
 import { Episode } from '@/features/podcast/domain/entities/Episode';
 
-type PodcastState = {
+interface PodcastState {
   // data
   list: Podcast[];
   episodesByPodcastId: Record<string, Episode[]>;
-  episodesUpdatedAt: Record<string, number>;
 
   // meta
+  listUpdatedAt: number | null;
+  episodesUpdatedAt: Record<string, number>;
+
+  // UI State
   loading: boolean;
-  lastUpdated?: number;
+  error: Error | null;
 
-  // actions
-  setLoading: (v: boolean) => void;
+  // actions - setters
+  setPodcasts: (podcasts: Podcast[]) => void;
+  setEpisodes: (podcastId: string, episodes: Episode[]) => void;
 
-  // fetchers (services behind DI)
-  isOutdated: () => boolean;
+  // actions - UI State
+  setLoading: (loading: boolean) => void;
+  setError: (error: Error | null) => void;
+
+  // cache helpers
+  isListCacheValid: (ttlMs: number) => boolean;
+  isEpisodesCacheValid: (podcastId: string, ttlMs: number) => boolean;
+
+  // getters
   getPodcastById: (id: string) => Podcast | undefined;
-  loadListIfOutdated: (limit?: number) => Promise<Podcast[]>;
-  loadEpisodesIfNeeded: (podcastId: string) => Promise<Episode[]>;
+  getEpisodes: (podcastId: string) => Episode[];
+
+  // cache management
+  clearAllCache: () => void;
+  clearEpisodesCache: (podcastId: string) => void;
 };
 
 const STORAGE_KEY = 'podcast-cache-v1';
@@ -32,96 +44,88 @@ export const usePodcastStore = create<PodcastState>()(
     (set, get) => ({
       list: [],
       episodesByPodcastId: {},
+      listUpdatedAt: null,
       episodesUpdatedAt: {},
       loading: false,
-      lastUpdated: 0,
+      error: null,
 
-      setLoading: (v) => set({ loading: v }),
+      setPodcasts: (podcasts) => set({
+        list: podcasts,
+        listUpdatedAt: Date.now(),
+        error: null
+      }),
 
-      isOutdated: () => {
-        const { lastUpdated } = get();
-        const { CACHE_PODCASTS_TTL_MS } = getConfig();
+      setEpisodes: (podcastId, episodes) => set((state) => ({
+        episodesByPodcastId: {
+          ...state.episodesByPodcastId,
+          [podcastId]: episodes
+        },
+        episodesUpdatedAt: {
+          ...state.episodesUpdatedAt,
+          [podcastId]: Date.now()
+        },
+        error: null
+      })),
 
-        if (!lastUpdated) { return true; }
+      setLoading: (loading) => set({ loading }),
+      setError: (error) => set({ error, loading: false }),
 
-        return Date.now() - lastUpdated > CACHE_PODCASTS_TTL_MS;
+      isListCacheValid: (ttlMs) => {
+        const { listUpdatedAt } = get();
+
+        if (!listUpdatedAt) { return false; }
+
+        return Date.now() - listUpdatedAt < ttlMs;
+      },
+
+      isEpisodesCacheValid: (podcastId, ttlMs) => {
+        const { episodesUpdatedAt, episodesByPodcastId } = get();
+
+        if (!episodesByPodcastId[podcastId]) { return false; }
+
+        const timestamp = episodesUpdatedAt[podcastId];
+
+        if (!timestamp) { return false; }
+
+        return Date.now() - timestamp < ttlMs;
       },
 
       getPodcastById: (id) => get().list.find((p) => p.id === id),
+      getEpisodes: (podcastId) => get().episodesByPodcastId[podcastId] || [],
 
-      async loadListIfOutdated(limit = 100) {
-        const state = get();
+      clearAllCache: () => set({
+        list: [],
+        episodesByPodcastId: {},
+        listUpdatedAt: null,
+        episodesUpdatedAt: {},
+        error: null
+      }),
 
-        set({ loading: true });
+      clearEpisodesCache: (podcastId) => set((state) => {
+        const newEpisodes = { ...state.episodesByPodcastId };
+        const newTimestamps = { ...state.episodesUpdatedAt };
 
-        if (!!state.list.length && !state.isOutdated()) {
-          set({ loading: false });
+        delete newEpisodes[podcastId];
+        delete newTimestamps[podcastId];
 
-          return state.list;
-        }
-
-        try {
-          const items = await di.podcastService.list(limit);
-
-          set({
-            list: items,
-            episodesByPodcastId: {},
-            lastUpdated: Date.now(),
-            loading: false
-          });
-
-          return items;
-        } catch (error: any) {
-          set({ loading: false });
-          throw error;
-        }
-      },
-
-      async loadEpisodesIfNeeded(podcastId: string) {
-        const { episodesByPodcastId, episodesUpdatedAt } = get();
-        const { CACHE_EPISODES_TTL_MS } = getConfig();
-        const now = Date.now();
-        const lastUpdate = episodesUpdatedAt[podcastId];
-        const cacheValid = lastUpdate && now - lastUpdate < CACHE_EPISODES_TTL_MS;
-
-        set({ loading: true });
-
-        if (!!episodesByPodcastId[podcastId]?.length && cacheValid) {
-          set({ loading: false });
-
-          return episodesByPodcastId[podcastId];
-        }
-
-        try {
-          const episodes = await di.podcastService.listEpisodes(podcastId);
-
-          set((state) => ({
-            episodesByPodcastId: {
-              ...state.episodesByPodcastId,
-              [podcastId]: episodes
-            },
-            episodesUpdatedAt: {
-              ...state.episodesUpdatedAt,
-              [podcastId]: now
-            },
-            loading: false
-          }));
-
-          return episodes;
-        } catch (error: any) {
-          set({ loading: false });
-          throw error;
-        }
-      }
+        return {
+          episodesByPodcastId: newEpisodes,
+          episodesUpdatedAt: newTimestamps
+        };
+      })
     }),
     {
       name: STORAGE_KEY,
       partialize: (state) => ({
         list: state.list,
         episodesByPodcastId: state.episodesByPodcastId,
-        episodesUpdatedAt: state.episodesUpdatedAt,
-        lastUpdated: state.lastUpdated
+        listUpdatedAt: state.listUpdatedAt,
+        episodesUpdatedAt: state.episodesUpdatedAt
       })
     }
   )
 );
+
+export const selectPodcasts = (state: PodcastState) => state.list;
+export const selectLoading = (state: PodcastState) => state.loading;
+export const selectError = (state: PodcastState) => state.error;

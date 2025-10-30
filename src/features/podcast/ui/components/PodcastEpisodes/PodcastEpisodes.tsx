@@ -5,7 +5,7 @@ import { formatDuration } from '@/shared/utils/formatDuration';
 import styles from './PodcastEpisodes.module.css';
 
 function PodcastEpisodes({ podcastId, episodes }: { podcastId: string, episodes: Episode[] }) {
-  const { INTL_FORMAT } = getConfig();
+  const config = getConfig();
 
   return (
     <section className={styles.episodes_table} role="table">
@@ -16,7 +16,7 @@ function PodcastEpisodes({ podcastId, episodes }: { podcastId: string, episodes:
       </div>
 
       {episodes.map((episode) => {
-        const date = new Intl.DateTimeFormat(INTL_FORMAT).format(new Date(episode.date));
+        const date = new Intl.DateTimeFormat(config.INTL_FORMAT).format(new Date(episode.date));
 
         return (
           <Link key={episode.id} to={`/podcast/${podcastId}/episode/${episode.id}`} className={styles.episode_row} role="row">

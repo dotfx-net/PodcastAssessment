@@ -65,8 +65,8 @@ export const mapEpisodeEntryToEpisodeDTO = (entry: ITunesPodcastEpisode): Episod
 export function makePodcastApi(http: HttpClient) {
   return {
     async list(limit: number): Promise<PodcastDTO[]> {
-      const { ITUNES_TOPPODCASTS_PATH } = getConfig();
-      const path = ITUNES_TOPPODCASTS_PATH.replace('{{LIMIT_PODCASTS}}', String(limit));
+      const config = getConfig();
+      const path = config.ITUNES_TOPPODCASTS_PATH.replace('{{LIMIT_PODCASTS}}', String(limit));
 
       const res = await http.get<ITunesTopPodcastsFeedResponse>(path);
       const entries = res.feed?.entry ?? [];
@@ -74,8 +74,8 @@ export function makePodcastApi(http: HttpClient) {
       return entries.slice(0, limit).map(mapPodcastEntryToPodcastDTO);
     },
     async listEpisodes(podcastId: string): Promise<EpisodeDTO[]> {
-      const { ITUNES_PODCAST_EPISODE_PATH, LIMIT_EPISODES } = getConfig();
-      const path = ITUNES_PODCAST_EPISODE_PATH.replace('{{PODCAST_ID}}', podcastId).replace('{{LIMIT_EPISODES}}', LIMIT_EPISODES);
+      const config = getConfig();
+      const path = config.ITUNES_PODCAST_EPISODE_PATH.replace('{{PODCAST_ID}}', podcastId).replace('{{LIMIT_EPISODES}}', config.LIMIT_EPISODES);
 
       const res = await http.get<ITunesTopPodcastsFeedResponse>(path);
       const episodes = res?.results ?? [];
