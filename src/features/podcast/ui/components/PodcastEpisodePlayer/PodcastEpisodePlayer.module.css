@@ -1,0 +1,13 @@
+.episode_player {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+.episode_player audio {
+  width: 100%;
+}
+
+.episode_description {
+}

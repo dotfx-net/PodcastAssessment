@@ -109,17 +109,6 @@ hr {
   margin: 0;
 }
 
-.episode-player {
-  background-color: #fff;
-  border-radius: 16px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-}
-
-.episode-player audio {
-  width: 100%;
-}
-
 @keyframes spin {
   to {
     transform: rotate(360deg);

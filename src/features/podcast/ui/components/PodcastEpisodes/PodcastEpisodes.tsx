@@ -8,7 +8,7 @@ function PodcastEpisodes({ podcastId, episodes }: { podcastId: string, episodes:
   const { INTL_FORMAT } = getConfig();
 
   return (
-    <div className={styles.episodes_table} role="table">
+    <section className={styles.episodes_table} role="table">
       <div className={styles.episodes_table_header} role="row">
         <span role="columnheader">Title</span>
         <span role="columnheader" className={styles.episode_date_col}>Date</span>
@@ -26,7 +26,7 @@ function PodcastEpisodes({ podcastId, episodes }: { podcastId: string, episodes:
           </Link>
         );
       })}
-    </div>
+    </section>
   );
 }
 
