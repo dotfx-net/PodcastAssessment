@@ -12,7 +12,7 @@ function PodcastSearch({ loading, setQuery }: { loading: boolean, setQuery: Disp
 
     if (!!timeoutRef.current) { clearTimeout(timeoutRef.current); }
 
-    timeoutRef.current = setTimeout(() => setQuery(value), 300);
+    timeoutRef.current = setTimeout(() => setQuery(value), 150);
   };
 
   useEffect(() => {
