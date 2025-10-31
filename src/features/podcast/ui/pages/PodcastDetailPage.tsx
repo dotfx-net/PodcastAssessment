@@ -28,9 +28,11 @@ function PodcastDetailPage() {
           </div>
 
           <div className="podcast-detail-right">
-            <div className="episodes-count">
-              <h3>Episodes: {episodes.length}</h3>
-            </div>
+            {!episodesLoading && (
+              <div className="episodes-count">
+                <h3>Episodes: {episodes.length}</h3>
+              </div>
+            )}
 
             {episodesLoading && !episodes.length ? (
               <div>Loading episodes...</div>

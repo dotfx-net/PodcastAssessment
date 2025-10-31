@@ -24,7 +24,6 @@ Client-side routing is used exclusively; the page never does a full reload.
 - **React 19** + **TypeScript**
 - **Pure CSS** (no utility framework)
 - **Webpack 5** (dev server + production build)
-- **React Router 6+**
 - **Jest** + **React Testing Library** for component tests
 - **State**: [Zustand] for lightweight state + simple cache/TTL layer
 
@@ -32,8 +31,21 @@ Client-side routing is used exclusively; the page never does a full reload.
 
 ## Requirements
 
-- **Node.js** ≥ 19
-- **npm**
+To build and run this project, ensure the following tools and versions are installed:
+
+- Node.js ≥ 18.0.0 (for ESM support and compatibility with Webpack 5, React 19, and TypeScript 5)
+- npm ≥ 9.0.0
+- React.js ≥ 19.0.0
+- React DOM ≥ 19.0.0
+- React Router DOM ≥ 7.9.0
+- Webpack ≥ 5.102.0
+- TypeScript ≥ 5.9.0
+- Jest ≥ 30.0.0 (for unit testing)
+- Cypress ≥ 15.0.0 (for end-to-end testing)
+- Modern browser supporting ES2022 modules (Chrome, Firefox, Edge, Safari)
+
+Optional (for development convenience):
+- http-server ≥ 14.0.0 — used to preview the production build (npm run preview).
 
 ---
 
@@ -59,10 +71,9 @@ Preview the production build locally:
 npm run preview
 ```
 
-Run unit tests:
-```bash
-npm test
-```
+NOTE: When running the preview build, even though requests are wrapped through allorigins.win to bypass CORS restrictions, the iTunes API may occasionally block access.
+If that happens, simply refresh the page to retry and the request should succeed after a few attempts.
+In the development environment, this issue does not occur because a local proxy transparently forwards requests directly to the iTunes API, eliminating any CORS restrictions.
 
 ---
 
@@ -90,10 +101,12 @@ npm test
 ## Optimizations (Future Work)
 
 1. **Virtualized list** for long podcast lists using **@tanstack/virtual** to minimize DOM nodes and improve scroll performance.
-2. **Service Worker middleware** to intercept **and cache** podcast API responses differently from the UI state cache—e.g., stale‑while‑revalidate strategy, versioned precache, background sync.
-3. **Move TTL to a backend**: introduce a tiny proxy that calls the third‑party API, applies **server‑side cache + TTL**, and serves normalized responses. This reduces client complexity and stabilizes rate limits.
-4. **Code‑splitting** by route and critical‑CSS extraction to reduce initial payload.
-5. **E2E tests** (Playwright/Cypress) for navigation and regressions.
+2. **Skeleton view**: show lightweight skeleton components during loading.
+3. **Abort signal controller**: if clicking back or on another podcast during loading (all cards are disabled during loading to avoid clicks).
+4. **Service Worker middleware** to intercept **and cache** podcast API responses differently from the UI state cache—e.g., stale‑while‑revalidate strategy, versioned precache, background sync.
+5. **Move TTL to a backend**: introduce a tiny proxy that calls the third‑party API, applies **server‑side cache + TTL**, and serves normalized responses. This reduces client complexity and stabilizes rate limits.
+6. **Code‑splitting** by route and critical‑CSS extraction to reduce initial payload.
+7. **E2E tests** (Playwright/Cypress) for navigation and regressions.
 
 ---
 
@@ -125,4 +138,4 @@ While utility frameworks could accelerate development, the objective was to disp
 ### Testing
 
 Unit tests are implemented with **Jest** and **React Testing Library**, validating both logic and UI interactions.
-End-to-end (E2E) tests can be added using **Cypress**, which would verify navigation flows, playback interactions, and caching behavior across features.
+End-to-end (E2E) tests using **Cypress** to verify navigation flows, playback interactions, and caching behavior across features.

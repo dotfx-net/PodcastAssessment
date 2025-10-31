@@ -14,12 +14,8 @@ export class PodcastService {
     const store = usePodcastStore.getState();
     const config = getConfig();
 
-    if (store.isListCacheValid(config.CACHE_PODCASTS_TTL_MS)) {
-      console.log('[PodcastService] Using cached podcast list');
-      return store.list;
-    }
+    if (store.isListCacheValid(config.CACHE_PODCASTS_TTL_MS)) { return store.list; }
 
-    console.log('[PodcastService] Fetching fresh podcast list');
     store.setLoading(true);
 
     try {
@@ -41,12 +37,8 @@ export class PodcastService {
     const store = usePodcastStore.getState();
     const config = getConfig();
 
-    if (store.isEpisodesCacheValid(podcastId, config.CACHE_EPISODES_TTL_MS)) {
-      console.log(`[PodcastService] Using cached episodes for ${podcastId}`);
-      return store.getEpisodes(podcastId);
-    }
+    if (store.isEpisodesCacheValid(podcastId, config.CACHE_EPISODES_TTL_MS)) { return store.getEpisodes(podcastId); }
 
-    console.log(`[PodcastService] Fetching episodes for ${podcastId}`);
     store.setLoading(true);
 
     try {
