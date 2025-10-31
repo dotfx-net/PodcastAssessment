@@ -38,7 +38,7 @@ function PodcastListPage() {
             <PodcastSearch loading={loading} setQuery={setQuery} />
           </div>
 
-          <div className="podcast-grid">
+          <div className={`podcast-grid ${loading ? 'loading' : ''}`}>
             {filtered.map((p) => (
               <PodcastCard key={p.id} podcast={p} />
             ))}

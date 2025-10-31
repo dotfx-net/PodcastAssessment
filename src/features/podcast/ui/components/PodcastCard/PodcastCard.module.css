@@ -16,8 +16,9 @@
   transition: opacity 0.25s ease, box-shadow 0.25s ease;
 }
 
+.selected,
 .podcast_card:hover {
-  opacity: 1;
+  opacity: 1 !important;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 

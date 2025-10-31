@@ -24,6 +24,7 @@ Client-side routing is used exclusively; the page never does a full reload.
 - **React 19** + **TypeScript**
 - **Pure CSS** (no utility framework)
 - **Webpack 5** (dev server + production build)
+- **React Router 6+**
 - **Jest** + **React Testing Library** for component tests
 - **State**: [Zustand] for lightweight state + simple cache/TTL layer
 

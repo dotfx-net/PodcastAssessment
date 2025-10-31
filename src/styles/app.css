@@ -80,6 +80,12 @@ hr {
   padding: 3rem 1rem;
 }
 
+.podcast-grid.loading > a {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.25 !important;
+}
+
 .podcast-detail-layout {
   display: grid;
   grid-template-columns: 280px 1fr;

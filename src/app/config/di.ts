@@ -1,4 +1,3 @@
-import { getConfig } from '@/app/config/loadConfig';
 import { FetchHttpClient } from '@/shared/infrastructure/http/FetchHttpClient';
 import { HttpPodcastRepository } from '@/features/podcast/infrastructure/repositories/HttpPodcastRepository';
 import { PodcastService } from '@/features/podcast/application/services/PodcastService';
@@ -22,9 +21,9 @@ class DIContainer {
 
   get httpClient(): HttpClient {
     if (!this._httpClient) {
-      const config = getConfig();
+      const isDev = process.env.NODE_ENV === 'development';
 
-      this._httpClient = new FetchHttpClient(config.ITUNES_URL);
+      this._httpClient = new FetchHttpClient(isDev ? '/itunes' : 'https://api.allorigins.win');
     }
 
     return this._httpClient;

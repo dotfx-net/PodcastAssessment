@@ -1,5 +1,5 @@
 {
-  "ITUNES_URL": "https://itunes.apple.com/",
+  "ITUNES_URL": "https://itunes.apple.com",
   "ITUNES_TOPPODCASTS_PATH": "/us/rss/toppodcasts/limit={{LIMIT_PODCASTS}}/genre=1310/json",
   "ITUNES_PODCAST_EPISODE_PATH": "/lookup?id={{PODCAST_ID}}&media=podcast&entity=podcastEpisode&limit={{LIMIT_EPISODES}}",
   "LIMIT_PODCASTS": 100,

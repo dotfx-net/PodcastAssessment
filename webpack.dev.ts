@@ -1,9 +1,8 @@
 import path from 'node:path';
-import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import ReactRefreshTypeScript from 'react-refresh-typescript';
-import type { Configuration } from 'webpack';
+import webpack, { type Configuration } from 'webpack';
 
 const root = process.cwd();
 const config: Configuration = {
@@ -63,6 +62,9 @@ const config: Configuration = {
     new webpack.HotModuleReplacementPlugin(),
     new ReactRefreshWebpackPlugin({
       overlay: { sockIntegration: 'wds' }
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })
   ],
   devServer: {
@@ -76,6 +78,18 @@ const config: Configuration = {
       publicPath: '/',
       watch: true
     },
+    proxy: [
+      {
+        context: ['/itunes'],
+        target: 'https://itunes.apple.com',
+        changeOrigin: true,
+        secure: true,
+        pathRewrite: { '^/itunes': '' },
+        headers: {
+          'Origin': 'https://itunes.apple.com',
+        }
+      }
+    ],
     devMiddleware: {
       writeToDisk: false
     },

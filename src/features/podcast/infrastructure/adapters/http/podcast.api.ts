@@ -1,5 +1,5 @@
 import { getConfig } from '@/app/config/loadConfig';
-import type { HttpClient } from '@/core/api/HttpClient';
+import type { HttpClient } from '@/features/shared/infrastructure/http/HttpClient';
 import type { ITunesTopPodcastsFeedResponse, ITunesTopPodcastsEntry, ITunesPodcastFeedResponse, ITunesPodcastEpisode } from './itunes.dto';
 
 export type PodcastDTO = {
@@ -66,19 +66,23 @@ export function makePodcastApi(http: HttpClient) {
   return {
     async list(limit: number): Promise<PodcastDTO[]> {
       const config = getConfig();
-      const path = config.ITUNES_TOPPODCASTS_PATH.replace('{{LIMIT_PODCASTS}}', String(limit));
+      const isDev = process.env.NODE_ENV === 'development';
+      const path = (isDev ? '' : config.ITUNES_URL) + config.ITUNES_TOPPODCASTS_PATH.replace('{{LIMIT_PODCASTS}}', String(limit));
 
       const res = await http.get<ITunesTopPodcastsFeedResponse>(path);
-      const entries = res.feed?.entry ?? [];
+      const data = isDev ? res : JSON.parse(res?.contents);
+      const entries = data.feed?.entry ?? [];
 
       return entries.slice(0, limit).map(mapPodcastEntryToPodcastDTO);
     },
     async listEpisodes(podcastId: string): Promise<EpisodeDTO[]> {
       const config = getConfig();
-      const path = config.ITUNES_PODCAST_EPISODE_PATH.replace('{{PODCAST_ID}}', podcastId).replace('{{LIMIT_EPISODES}}', config.LIMIT_EPISODES);
+      const isDev = process.env.NODE_ENV === 'development';
+      const path = (isDev ? '' : config.ITUNES_URL) + config.ITUNES_PODCAST_EPISODE_PATH.replace('{{PODCAST_ID}}', podcastId).replace('{{LIMIT_EPISODES}}', config.LIMIT_EPISODES);
 
       const res = await http.get<ITunesTopPodcastsFeedResponse>(path);
-      const episodes = res?.results ?? [];
+      const data = isDev ? res : JSON.parse(res?.contents);
+      const episodes = data?.results ?? [];
 
       return episodes.filter((episode) => episode.wrapperType == 'podcastEpisode').map(mapEpisodeEntryToEpisodeDTO);
     }

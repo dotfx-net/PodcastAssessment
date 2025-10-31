@@ -1,4 +1,4 @@
-import cfg from './config.json';
+import config from './config.json';
 
 interface Config {
   ITUNES_URL: string;
@@ -11,4 +11,4 @@ interface Config {
   INTL_FORMAT: string;
 };
 
-export const getConfig = () => cfg as Config;
+export const getConfig = () => config as Config;

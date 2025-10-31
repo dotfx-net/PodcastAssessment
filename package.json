@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development CHOKIDAR_USEPOLLING=true WATCHPACK_POLLING=true webpack serve --config webpack.dev.ts",
     "build": "cross-env NODE_ENV=production webpack --config webpack.prod.ts",
-    "preview": "npx http-server dist -c-1",
+    "preview": "npx http-server ./dist -c-1 -p 4173 -a localhost",
     "test": "jest"
   },
   "author": "Christian Vandaele <christian@dotfx.net>",

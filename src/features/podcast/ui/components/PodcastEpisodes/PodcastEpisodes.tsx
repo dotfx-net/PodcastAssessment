@@ -22,7 +22,7 @@ function PodcastEpisodes({ podcastId, episodes }: { podcastId: string, episodes:
           <Link key={episode.id} to={`/podcast/${podcastId}/episode/${episode.id}`} className={styles.episode_row} role="row">
             <strong className={styles.episode_title}>{episode.title}</strong>
             <span className={`${styles.episode_date} ${styles.episode_date_col}`}>{date}</span>
-            <span className={`${styles.episode_duration} ${styles.episode_duration_col}`}>{formatDuration(episode.duration / 1_000)}</span>
+            <span className={`${styles.episode_duration} ${styles.episode_duration_col}`}>{!!episode.duration ? formatDuration(episode.duration / 1_000) : '-'}</span>
           </Link>
         );
       })}

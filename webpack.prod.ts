@@ -2,7 +2,7 @@ import path from 'node:path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import TerserPlugin from 'terser-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
-import type { Configuration } from 'webpack';
+import webpack, { type Configuration } from 'webpack';
 
 const config: Configuration = {
   mode: 'production',
@@ -49,14 +49,18 @@ const config: Configuration = {
         test: /\.css$/,
         use: [
           'style-loader',
-          { loader: 'css-loader', options: { sourceMap: false }, exclude: /\.module\.css }
-        ]
+          { loader: 'css-loader', options: { sourceMap: false } }
+        ],
+        exclude: /\.module\.css$/
       },
       { test: /\.(png|jpg|jpeg|gif|svg)$/i, type: 'asset', parser: { dataUrlCondition: { maxSize: 10 * 1_024 } } }
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: 'index.html', minify: false })
+    new HtmlWebpackPlugin({ template: 'index.html', minify: false }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
+    })
   ],
   optimization: {
     splitChunks: { chunks: 'all' },
