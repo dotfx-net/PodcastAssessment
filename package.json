@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development CHOKIDAR_USEPOLLING=true WATCHPACK_POLLING=true webpack serve --config webpack.dev.ts",
     "build": "cross-env NODE_ENV=production webpack --config webpack.prod.ts",
-    "preview": "npx http-server ./dist -c-1 -p 4173 -a localhost",
+    "preview": "node preview-server.js 4173",
     "test": "jest"
   },
   "author": "Christian Vandaele <christian@dotfx.net>",
@@ -16,6 +16,7 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
     "dompurify": "^3.3.0",
+    "express": "^5.1.0",
     "jest-environment-jsdom": "^30.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

@@ -12,6 +12,7 @@ const config: Configuration = {
     filename: 'assets/js/[name].[contenthash:8].js',
     chunkFilename: 'assets/js/[name].[contenthash:8].js',
     assetModuleFilename: 'assets/media/[name].[contenthash:8][ext]',
+    publicPath: '/',
     clean: true
   },
   devtool: false,
