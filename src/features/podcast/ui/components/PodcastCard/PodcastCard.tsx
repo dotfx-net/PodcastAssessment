@@ -4,7 +4,7 @@ import styles from './PodcastCard.module.css';
 
 function PodcastCard({ podcast }: { podcast: Podcast }) {
   return (
-    <NavLink key={podcast.id} to={`/podcast/${podcast.id}`} className={({ isActive }) => `${styles.podcast_card} ${isActive ? styles.selected : ''}`}>
+    <NavLink key={podcast.id} to={`/podcast/${podcast.id}`} className={({ isActive }) => `${styles.podcast_card} ${isActive ? styles.selected : ''}`} data-testid="podcast-card">
       <img src={podcast.imageUrl} alt={podcast.name} width={120} height={120} loading="lazy" />
       <div className={styles.meta}>
         <div className={styles.name}>{podcast.name}</div>

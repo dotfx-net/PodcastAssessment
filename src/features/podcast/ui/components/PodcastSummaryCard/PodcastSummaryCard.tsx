@@ -6,7 +6,7 @@ function PodcastSummaryCard({ id }: { id: string; }) {
   const podcast = getPodcastById(id);
 
   return (
-    <div className={styles.podcast_summary_card}>
+    <div className={styles.podcast_summary_card} data-testid="podcast-summary">
       <div className={styles.image}>
         <img src={podcast.imageUrl} alt={podcast.name} width={120} height={120} />
       </div>

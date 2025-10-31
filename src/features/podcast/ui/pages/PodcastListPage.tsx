@@ -36,7 +36,7 @@ function PodcastListPage() {
 
       <section>
         <div className="podcast-search">
-          <div className="podcast-count">{filtered.length}</div>
+          <div className="podcast-count" data-testid="podcast-count">{filtered.length}</div>
           <PodcastSearch loading={loading} setQuery={setQuery} />
         </div>
 

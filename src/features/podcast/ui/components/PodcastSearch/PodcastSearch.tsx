@@ -29,6 +29,7 @@ function PodcastSearch({ loading, setQuery }: { loading: boolean, setQuery: Disp
         value={search}
         onChange={handleChange}
         disabled={loading}
+        data-testid="podcast-search"
       />
     </div>
   );

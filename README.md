@@ -24,7 +24,7 @@ Client-side routing is used exclusively; the page never does a full reload.
 - **React 19** + **TypeScript**
 - **Pure CSS** (no utility framework)
 - **Webpack 5** (dev server + production build)
-- **Jest** + **React Testing Library** for component tests
+- **Jest** + **React Testing Library** + **Cypress** for tests
 - **State**: [Zustand] for lightweight state + simple cache/TTL layer
 
 ---
@@ -86,6 +86,11 @@ In the development environment, this issue does not occur because a local proxy 
 Run:
 ```bash
 npm test
+```
+
+- **Cypress e2e tests**: run in another terminal (while serving the project):
+```bash
+npm run test:e2e
 ```
 
 ---

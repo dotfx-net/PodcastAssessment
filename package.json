@@ -8,7 +8,9 @@
     "dev": "cross-env NODE_ENV=development CHOKIDAR_USEPOLLING=true WATCHPACK_POLLING=true webpack serve --config webpack.dev.ts",
     "build": "cross-env NODE_ENV=production webpack --config webpack.prod.ts",
     "preview": "node preview-server.js 4173",
-    "test": "jest"
+    "test": "jest",
+    "test:e2e": "npx cypress open",
+    "test:e2e:headless": "npx cypress run"
   },
   "author": "Christian Vandaele <christian@dotfx.net>",
   "dependencies": {
@@ -32,6 +34,7 @@
     "cross-env": "^10.1.0",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.2",
+    "cypress": "^15.5.0",
     "html-webpack-plugin": "^5.6.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^30.2.0",
